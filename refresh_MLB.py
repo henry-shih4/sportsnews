@@ -7,11 +7,14 @@ url = f'https://api.foxsports.com/v2/content/optimized-rss?partnerKey=MB0Wehpmuj
 avoidList = ["|", "Ben Verlander", "streaming", "odds", "standings", "betting", "mock", "tracker" ]
 
 
-get_data.scrape(url,'MLB', avoidList)
 
 
 
 # JSON file containing the scraped data
 json_file = 'MLB-article-data.json'
 
-pymongo_upload.upload_to_mongodb(json_file)
+
+
+def get_MLB_articles():
+    get_data.scrape(url,'MLB', avoidList)
+    pymongo_upload.upload_to_mongodb(json_file)
