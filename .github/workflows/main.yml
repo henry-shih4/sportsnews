@@ -3,7 +3,7 @@ name: Run Python script
 
 on:
   schedule:
-    - cron: '*/20 * * * *' 
+    - cron: '*/25 * * * *' 
 
 jobs:
   run_python_script:
@@ -23,4 +23,4 @@ jobs:
           pip install -r requirements.txt  # Install your Python script dependencies
 
       - name: Run Python script
-        run: python path/to/your/script.py
+        run: python main.py
