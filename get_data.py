@@ -5,6 +5,27 @@ from selenium import webdriver
 import time
 from pymongo_get_db import get_database
 from datetime import datetime
+import chromedriver_autoinstaller
+
+chromedriver_autoinstaller.install() 
+
+chrome_options = webdriver.ChromeOptions()    
+# Add your options as needed    
+options = [
+   "--no-sandbox",
+   "--window-size=1200,1200",
+    "--ignore-certificate-errors"
+    "--headless",
+    #"--disable-gpu",
+    #"--window-size=1920,1200",
+    #"--ignore-certificate-errors",
+    #"--disable-extensions",
+    #"--disable-dev-shm-usage",
+    #'--remote-debugging-port=9222'
+]
+
+for option in options:
+    chrome_options.add_argument(option)
 
 def scrape(scrape_url, category, avoidList):
     dbname = get_database()
@@ -42,7 +63,7 @@ def scrape(scrape_url, category, avoidList):
 
             if url:
                 # Start a Selenium webdriver
-                driver=webdriver.Chrome()
+                driver=webdriver.Chrome(options = chrome_options)
                 article_url = url
                 # Load the page
                 driver.get(article_url)
