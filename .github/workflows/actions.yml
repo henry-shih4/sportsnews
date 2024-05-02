@@ -27,15 +27,11 @@ jobs:
           pip install -r requirements.txt
         
       - name: Prepare Selenium
-             # https://github.com/marketplace/actions/setup-chromedriver
         uses: nanasess/setup-chromedriver@master
-      - name: Launch browser
       - name: Start XVFB
         run: |
-          google-chrome --version
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          
+         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+    
       - name: execute py script # run main.py
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
