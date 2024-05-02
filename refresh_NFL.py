@@ -11,6 +11,6 @@ avoidList = ["|", "streaming", "odds", "standings", "betting", "mock", "tracker"
 json_file = 'NFL-article-data.json'
 
 
-def get_NBA_articles():
+def get_NFL_articles():
     get_data.scrape(url,'NFL', avoidList)
     pymongo_upload.upload_to_mongodb(json_file)
