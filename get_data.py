@@ -38,9 +38,11 @@ def scrape(scrape_url, category, avoidList):
             if result:
                 print('Article already exists in MongoDB')
                 continue
-            # Start a Selenium webdriver
-            driver=webdriver.Chrome()
+
+
             if url:
+                # Start a Selenium webdriver
+                driver=webdriver.Chrome()
                 article_url = url
                 # Load the page
                 driver.get(article_url)
@@ -64,7 +66,7 @@ def scrape(scrape_url, category, avoidList):
                     #     continue
                     # else:
                         article_content +=  content.text + "\n"
-               
+                driver.quit()
             if article_content == "":
                 continue
             article['content'] = article_content
@@ -81,7 +83,6 @@ def scrape(scrape_url, category, avoidList):
             article['comments'] = []
             
             articles.append(article)
-            driver.quit()
         
         try:
             with open(category +'-article-data' +'.json', 'r') as f:
