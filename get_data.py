@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
 from pymongo_get_db import get_database
 from datetime import datetime
@@ -12,23 +13,22 @@ import chromedriver_autoinstaller
 def scrape(scrape_url, category, avoidList):
     chromedriver_autoinstaller.install() 
 
-    chrome_options = webdriver.ChromeOptions()    
+    options = Options()    
     # Add your options as needed    
-    options = [
-    "--no-sandbox",
-    "--window-size=1200,1200",
-        "--ignore-certificate-errors"
-        "--headless",
-        #"--disable-gpu",
-        #"--window-size=1920,1200",
-        #"--ignore-certificate-errors",
-        #"--disable-extensions",
-        #"--disable-dev-shm-usage",
-    #'--remote-debugging-port=9222'
-    ]
+    # options = [
+    # "--no-sandbox",
+    # "--window-size=1200,1200",
+    #     "--ignore-certificate-errors"
+    #     "--headless",
+    #     #"--disable-gpu",
+    #     #"--window-size=1920,1200",
+    #     #"--ignore-certificate-errors",
+    #     #"--disable-extensions",
+    #     #"--disable-dev-shm-usage",
+    # #'--remote-debugging-port=9222'
+    # ]
 
-    for option in options:
-        chrome_options.add_argument(option)
+    options.add_argument('--headless')
 
     dbname = get_database()
     collection_name = dbname["articles"]
@@ -65,7 +65,7 @@ def scrape(scrape_url, category, avoidList):
 
             if url:
                 # Start a Selenium webdriver
-                driver=webdriver.Chrome(options = chrome_options)
+                driver=webdriver.Chrome(options = options)
                 article_url = url
                 # Load the page
                 driver.get(article_url)
