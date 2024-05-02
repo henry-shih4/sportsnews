@@ -15,4 +15,4 @@ json_file = 'NBA-article-data.json'
 
 def get_NBA_articles():
     get_data.scrape(url,'NBA', avoidList)
-    # pymongo_upload.upload_to_mongodb(json_file)
+    pymongo_upload.upload_to_mongodb(json_file)
