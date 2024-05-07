@@ -7,7 +7,7 @@ import time
 from pymongo_get_db import get_database
 from datetime import datetime
 import chromedriver_autoinstaller
-
+from selenium.common.exceptions import WebDriverException
 
 
 def scrape(scrape_url, category, avoidList):
@@ -61,35 +61,31 @@ def scrape(scrape_url, category, avoidList):
             if result:
                 print('Article already exists in MongoDB')
                 continue
-
-
+            
+            
             if url:
-                # Start a Selenium webdriver
-                driver=webdriver.Chrome(options = options)
-                article_url = url
-                # Load the page
-                driver.get(article_url)
-                # Wait for the dynamic content to load (adjust the sleep time as needed)
-                time.sleep(5)
-                # Get the page source
-                html_content = driver.page_source
-                # Parse the HTML content with BeautifulSoup
-                soup2 = BeautifulSoup(html_content, "html.parser")
-                # Find the elements you want
-                contents = soup2.find_all(['p', 'h2', 'h3', 'ul', 'li'], class_=['article-content','ff-h'])
-                article_content = ""
-                for content in contents:
-                    # if content.name == "li" or content.name == "ul":
-                    #     article_content += " " + content.text + "\n"
-                    # skip = False
-                    # for link in content.find_all('a',href=True):
-                    #     if "newsletter" or "FOX Sports" in link.text:
-                    #         skip = True
-                    # if skip:
-                    #     continue
-                    # else:
-                        article_content +=  content.text + "\n"
-                driver.quit()
+                try:
+                    # Start a Selenium webdriver
+                    driver=webdriver.Chrome(options = options)
+                    article_url = url
+                    # Load the page
+                    driver.get(article_url)
+                    # Wait for the dynamic content to load (adjust the sleep time as needed)
+                    time.sleep(5)
+                    # Get the page source
+                    html_content = driver.page_source
+                    # Parse the HTML content with BeautifulSoup
+                    soup2 = BeautifulSoup(html_content, "html.parser")
+                    # Find the elements you want
+                    contents = soup2.find_all(['p', 'h2', 'h3', 'ul', 'li'], class_=['article-content','ff-h'])
+                    article_content = ""
+                    for content in contents:
+                            article_content +=  content.text + "\n"
+                except WebDriverException as e:
+                    print("An error occurred:", e)
+                finally:
+                    # Close the WebDriver
+                    driver.quit()
             if article_content == "":
                 continue
             article['content'] = article_content
