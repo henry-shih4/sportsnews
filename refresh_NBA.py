@@ -3,7 +3,7 @@ import pymongo_upload
 
 url = f'https://api.foxsports.com/v2/content/optimized-rss?partnerKey=MB0Wehpmuj2lUhuRhQaafhBjAJqaPU244mlTDK1i&size=20&tags=fs/nba'
 
-avoidList = ["|", "streaming", "odds", "standings", "betting", "mock", "tracker", "how to watch", "FOX" ]
+avoidList = ["|", "streaming", "odds", "standings", "betting", "mock", "tracker", "how to watch" ]
 
 
 

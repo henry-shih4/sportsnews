@@ -4,7 +4,7 @@ import pymongo_upload
 
 url = f'https://api.foxsports.com/v2/content/optimized-rss?partnerKey=MB0Wehpmuj2lUhuRhQaafhBjAJqaPU244mlTDK1i&size=20&tags=fs/nfl'
 
-avoidList = ["|", "streaming", "odds", "standings", "betting", "mock", "tracker", "how to watch", "FOX" ]
+avoidList = ["|", "streaming", "odds", "standings", "betting", "mock", "tracker", "how to watch" ]
 
 
 # JSON file containing the scraped data
