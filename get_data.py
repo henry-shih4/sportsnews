@@ -8,7 +8,7 @@ from pymongo_get_db import get_database
 from datetime import datetime
 import chromedriver_autoinstaller
 from selenium.common.exceptions import WebDriverException
-
+import datetime
 
 def scrape(scrape_url, category, avoidList):
     chromedriver_autoinstaller.install() 
@@ -99,6 +99,7 @@ def scrape(scrape_url, category, avoidList):
             article['thumbnail'] = thumbnail
             article['category'] = category
             article['date'] = date_written
+            article['date-upload'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             article['comments'] = []
             
             articles.append(article)
