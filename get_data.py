@@ -56,7 +56,7 @@ def scrape(scrape_url, category, avoidList):
             article['url'] = url
             if skip:
                 continue
-            query = {"title": title, "url": url}
+            query = {"url": url}
             result = collection_name.find_one(query)
             if result:
                 print('Article already exists in MongoDB')
