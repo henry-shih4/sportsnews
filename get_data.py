@@ -9,6 +9,8 @@ from datetime import datetime
 import chromedriver_autoinstaller
 from selenium.common.exceptions import WebDriverException
 import datetime
+from markdownify import markdownify as md
+
 
 def scrape(scrape_url, category, avoidList):
     chromedriver_autoinstaller.install() 
@@ -76,11 +78,19 @@ def scrape(scrape_url, category, avoidList):
                     html_content = driver.page_source
                     # Parse the HTML content with BeautifulSoup
                     soup2 = BeautifulSoup(html_content, "html.parser")
+                    soup2.a.decompose()
+
+                    for a in soup2.find_all('a'):
+                        a.replace_with(a.get_text())
                     # Find the elements you want
                     contents = soup2.find_all(['p', 'h2', 'h3', 'ul', 'li'], class_=['article-content','ff-h'])
                     article_content = ""
+                    skip = 'FOX Sports account'
                     for content in contents:
-                            article_content +=  content.text + "\n"
+                        text = str(content)
+                        if skip in text:
+                            continue
+                        article_content += (text)
                 except WebDriverException as e:
                     print("An error occurred:", e)
                 finally:
@@ -88,7 +98,10 @@ def scrape(scrape_url, category, avoidList):
                     driver.quit()
             if article_content == "":
                 continue
-            article['content'] = article_content
+
+            markdown_content = md(article_content, heading_style="ATX")
+
+            article['content'] = markdown_content
             
             hero_img = item.find('media:content').get("url")
             thumbnail = item.find('media:thumbnail').get("url")
