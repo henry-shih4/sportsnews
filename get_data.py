@@ -106,12 +106,14 @@ def scrape(scrape_url, category, avoidList):
             hero_img = item.find('media:content').get("url")
             thumbnail = item.find('media:thumbnail').get("url")
             date_written = item.find('pubDate').text
+            date_object = datetime.datetime.strptime(date_written, "%a, %d %b %Y %H:%M:%S %z")
             
             article['description'] = description
             article['hero_img'] = hero_img
             article['thumbnail'] = thumbnail
             article['category'] = category
-            article['date'] = date_written
+            article['date_string'] = date_written
+            article['date']:date_object
             article['date_upload'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             article['comments'] = []
             
