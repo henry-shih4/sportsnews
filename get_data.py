@@ -106,7 +106,7 @@ def scrape(scrape_url, category, avoidList):
             hero_img = item.find('media:content').get("url")
             thumbnail = item.find('media:thumbnail').get("url")
             date_written = item.find('pubDate').text
-            date_object = datetime.datetime.strptime(date_written, "%a, %d %b %Y %H:%M:%S %z")
+            date_object = datetime.datetime.strptime(date_written, "%a, %d %b %Y %H:%M:%S %z").isoformat()
             
             article['description'] = description
             article['hero_img'] = hero_img
