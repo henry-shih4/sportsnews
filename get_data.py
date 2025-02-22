@@ -113,7 +113,7 @@ def scrape(scrape_url, category, avoidList):
             article['thumbnail'] = thumbnail
             article['category'] = category
             article['date_string'] = date_written
-            article['date']:date_object
+            article['date'] = date_object
             article['date_upload'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             article['comments'] = []
             
